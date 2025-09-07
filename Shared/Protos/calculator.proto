@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package calculator;
+
+option csharp_namespace = "AspireDemoGrpc.Shared.Protos";
+
+service CalculatorService {
+  rpc Add (AddRequest) returns (AddResponse);
+  rpc Ping (PingRequest) returns (PingResponse);
+}
+
+message AddRequest {
+}
+
+message AddResponse {
+  int32 sum = 1;
+}
+
+message PingRequest {
+}
+
+message PingResponse {
+  string message = 1;
+}

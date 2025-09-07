@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package data;
+
+option csharp_namespace = "AspireDemoGrpc.Shared.Protos";
+
+service DataService {
+  rpc GetData (DataRequest) returns (DataResponse);
+}
+
+message DataRequest {
+}
+
+message DataResponse {
+  int32 x = 1;
+  int32 y = 2;
+}
