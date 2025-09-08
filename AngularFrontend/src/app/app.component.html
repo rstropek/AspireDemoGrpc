@@ -1,6 +1,6 @@
 <div class="container">
   <h1>{{ title }}</h1>
-  
+
   <div class="section">
     <h2>gRPC Services</h2>
     <div class="button-group">
@@ -8,7 +8,7 @@
       <button (click)="add()">Add Numbers</button>
       <button (click)="postgres()">Database Query</button>
     </div>
-    
+
     <div class="results">
       <div class="result-item">
         <strong>Ping Result:</strong> {{ pingResult }}
@@ -29,12 +29,14 @@
       <button (click)="getMqttMessages()">Get Messages</button>
       <button (click)="clearMqttMessages()">Clear Messages</button>
     </div>
-    
+
     <div class="results">
       <div class="result-item">
         <strong>Received MQTT Messages:</strong>
         <ul>
-          <li *ngFor="let message of mqttMessages">{{ message }}</li>
+          @for (message of mqttMessages; track message) {
+            <li>{{ message }}</li>
+          }
         </ul>
       </div>
     </div>

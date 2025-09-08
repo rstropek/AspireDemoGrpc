@@ -74,8 +74,11 @@ mqttClient.ApplicationMessageReceivedAsync += e =>
 var mqttService = app.Services.GetRequiredService<ILogger<Program>>();
 
 // Use local MQTT broker
+var host = app.Configuration["MQTT__HOST"] ?? "localhost";
+var port = int.TryParse(app.Configuration["MQTT__PORT"], out var p) ? p : 1883;
+mqttService.LogInformation("Using MQTT broker at {Host}:{Port}", host, port);
 var options = new MqttClientOptionsBuilder()
-    .WithTcpServer("localhost", 1883) // Use local MQTT broker
+    .WithTcpServer(host, port) // Use local MQTT broker
     .Build();
 
 // Start MQTT connection immediately

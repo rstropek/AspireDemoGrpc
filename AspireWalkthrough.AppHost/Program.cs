@@ -1,4 +1,16 @@
+using System.Net.Sockets;
+
 var builder = DistributedApplication.CreateBuilder(args);
+
+var mosquitto = builder.AddContainer("mosquitto", image: "eclipse-mosquitto:latest")
+    .WithBindMount(Path.Join("..", "Mosquitto", "mosquitto.conf"), "/mosquitto/config/mosquitto.conf")
+    .WithEndpoint("mqtt", e =>
+    {
+        e.Port = 1883;
+        e.TargetPort = 1833;
+        e.Protocol = ProtocolType.Tcp;
+        e.UriScheme = "tcp";
+    });
 
 var backend = builder.AddProject<Projects.Backend>("backend")
     .WithReplicas(2);
@@ -18,7 +30,15 @@ var mqttPublisher = builder.AddProject<Projects.MqttPublisher>("mqtt-publisher")
     .WithExternalHttpEndpoints();
 
 var mqttSubscriber = builder.AddProject<Projects.MqttSubscriber>("mqtt-subscriber")
-    .WithExternalHttpEndpoints();
+    .WithExternalHttpEndpoints()
+    .WithReference(mosquitto.GetEndpoint("mqtt"))
+    .WithEnvironment(ctx =>
+    {
+        var ep = mosquitto.GetEndpoint("mqtt");
+        ctx.EnvironmentVariables["MQTT__HOST"] = ep.Host;
+        ctx.EnvironmentVariables["MQTT__PORT"] = ep.Port.ToString();
+        ctx.EnvironmentVariables["MQTT__URI"]  = ep.ToString()!; // e.g. tcp://localhost:1883
+    });
 
 // Add MongoDB
 var mongoDb = builder.AddMongoDB("mongodb")
