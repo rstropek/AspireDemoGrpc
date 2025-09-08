@@ -9,7 +9,7 @@ builder.AddServiceDefaults();
 builder.WebHost.UseUrls("http://localhost:5003");
 
 // Configure MongoDB with deferred connection and retry logic
-builder.Services.AddSingleton<IMongoDatabase>(serviceProvider =>
+builder.Services.AddSingleton(serviceProvider =>
 {
     var configuration = serviceProvider.GetRequiredService<IConfiguration>();
     var logger = serviceProvider.GetRequiredService<ILogger<Program>>();

@@ -1,7 +1,5 @@
 using MQTTnet;
-using MQTTnet.Client;
 using System.Collections.Concurrent;
-using System.Text;
 using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -46,27 +44,30 @@ app.MapGet("/clear", () =>
 app.MapGet("/", () => "MQTT Subscriber Service is running");
 
 // Start MQTT subscriber in background service
-var factory = new MqttFactory();
+var factory = new MqttClientFactory();
 var mqttClient = factory.CreateMqttClient();
 
-mqttClient.ApplicationMessageReceivedAsync += async e =>
+mqttClient.ApplicationMessageReceivedAsync += e =>
 {
     try
     {
-        var payload = Encoding.UTF8.GetString(e.ApplicationMessage.PayloadSegment);
+        var payload = e.ApplicationMessage.ConvertPayloadToString();
         var messageData = JsonSerializer.Deserialize<JsonElement>(payload);
-        
+
         var message = messageData.GetProperty("Message").GetString() ?? "Unknown";
         receivedMessages.Add($"[{DateTime.Now:HH:mm:ss}] {message}");
-        
+
         var logger = app.Services.GetRequiredService<ILogger<Program>>();
         logger.LogInformation("Received MQTT message: {Message}", message);
+
     }
     catch (Exception ex)
     {
         var logger = app.Services.GetRequiredService<ILogger<Program>>();
         logger.LogError(ex, "Error processing MQTT message");
     }
+
+    return Task.CompletedTask;
 };
 
 // Start MQTT connection in background service - don't block startup

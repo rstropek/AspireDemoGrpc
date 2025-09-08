@@ -7,14 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Aspire.Npgsql" Version="9.4.1" />
-    <PackageReference Include="Aspire.StackExchange.Redis.DistributedCaching" Version="9.4.1" />
-    <PackageReference Include="Grpc.AspNetCore" Version="2.62.0" />
-    <PackageReference Include="Grpc.Tools" Version="2.62.0">
+    <PackageReference Include="Aspire.Npgsql" Version="9.4.2" />
+    <PackageReference Include="Aspire.StackExchange.Redis.DistributedCaching" Version="9.4.2" />
+    <PackageReference Include="Grpc.AspNetCore" Version="2.71.0" />
+    <PackageReference Include="Grpc.Tools" Version="2.72.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Google.Protobuf" Version="3.25.1" />
+    <PackageReference Include="Google.Protobuf" Version="3.32.0" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.8" />
   </ItemGroup>
 

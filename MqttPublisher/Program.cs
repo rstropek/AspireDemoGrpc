@@ -1,6 +1,4 @@
 using MQTTnet;
-using MQTTnet.Client;
-using System.Text;
 using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -33,7 +31,7 @@ app.MapGet("/publish/{message}", async (string message, ILogger<Program> logger)
     {
         logger.LogInformation("Attempting to publish MQTT message: {Message}", message);
         
-        var factory = new MqttFactory();
+        var factory = new MqttClientFactory();
        using var mqttClient = factory.CreateMqttClient();
 
         var options = new MqttClientOptionsBuilder()
