@@ -1,0 +1,20 @@
+<div class="dashboard-container">
+  <h2>Dashboard</h2>
+  
+  <div class="response-section">
+    <div class="response-item">
+      <h3>Backend Status</h3>
+      <p class="response-text">{{ pingResponse() || 'Loading...' }}</p>
+    </div>
+    
+    <div class="response-item">
+      <h3>gRPC Service Status</h3>
+      <p class="response-text">{{ grpcResponse() || 'Loading...' }}</p>
+    </div>
+    
+    <div class="response-item">
+      <h3>Rust Service Response</h3>
+      <p class="response-text">{{ rustyResponse() || 'Loading...' }}</p>
+    </div>
+  </div>
+</div>

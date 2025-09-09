@@ -1,0 +1,43 @@
+<div class="mqtt-container">
+  <h2>MQTT Messaging</h2>
+  
+  <div class="message-input-section">
+    <input 
+      type="text" 
+      [(ngModel)]="messageText" 
+      placeholder="Enter your message"
+      class="message-input"
+    />
+    <button 
+      (click)="sendMessage()" 
+      [disabled]="!messageText || sending()"
+      class="send-button"
+    >
+      {{ sending() ? 'Sending...' : 'Send Message' }}
+    </button>
+  </div>
+
+  <div class="stream-controls">
+    <button 
+      (click)="toggleMessageStream()" 
+      class="stream-button"
+    >
+      {{ streaming() ? 'Stop Listening' : 'Start Listening' }}
+    </button>
+  </div>
+
+  <div class="messages-section">
+    <h3>Received Messages:</h3>
+    <div class="messages-container">
+      @if (messages().length === 0) {
+        <p class="no-messages">No messages received yet...</p>
+      } @else {
+        @for (msg of messages(); track msg.timestamp) {
+          <div class="message-item">
+            <strong>{{ msg.timestamp | date:'medium' }}</strong>: {{ msg.message }}
+          </div>
+        }
+      }
+    </div>
+  </div>
+</div>

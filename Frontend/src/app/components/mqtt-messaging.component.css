@@ -1,0 +1,94 @@
+.mqtt-container {
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background: #f9f9f9;
+}
+
+.message-input-section {
+  margin-bottom: 15px;
+}
+
+.message-input {
+  padding: 8px;
+  margin-right: 10px;
+  width: 300px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.send-button {
+  padding: 8px 15px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.send-button:disabled {
+  background: #6c757d;
+  cursor: not-allowed;
+}
+
+.send-button:hover:not(:disabled) {
+  background: #0056b3;
+}
+
+.stream-controls {
+  margin: 15px 0;
+}
+
+.stream-button {
+  padding: 8px 15px;
+  background: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.stream-button:hover {
+  background: #218838;
+}
+
+.messages-section {
+  margin-top: 20px;
+}
+
+.messages-section h3 {
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.messages-container {
+  max-height: 300px;
+  overflow-y: auto;
+  border: 1px solid #dee2e6;
+  padding: 15px;
+  border-radius: 4px;
+  background: white;
+}
+
+.no-messages {
+  color: #6c757d;
+  font-style: italic;
+  margin: 0;
+  text-align: center;
+  padding: 20px;
+}
+
+.message-item {
+  margin-bottom: 8px;
+  padding: 8px;
+  background: #f8f9fa;
+  border-radius: 3px;
+  border-left: 3px solid #007bff;
+}
+
+.message-item:last-child {
+  margin-bottom: 0;
+}

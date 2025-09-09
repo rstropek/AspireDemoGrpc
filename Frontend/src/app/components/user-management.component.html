@@ -1,0 +1,106 @@
+<div class="container">
+  <h2>User Management</h2>
+
+  <!-- Add New User Form -->
+  <div class="form-container">
+    <h3>{{ editingUser() ? 'Edit User' : 'Add New User' }}</h3>
+    <form (ngSubmit)="saveUser()" #userForm="ngForm">
+      <div class="form-group">
+        <label for="name" class="form-label">Name:</label>
+        <input 
+          type="text" 
+          id="name"
+          [(ngModel)]="currentUser.name" 
+          name="name"
+          required
+          class="form-input"
+        />
+      </div>
+      <div class="form-group">
+        <label for="email" class="form-label">Email:</label>
+        <input 
+          type="email" 
+          id="email"
+          [(ngModel)]="currentUser.email" 
+          name="email"
+          required
+          class="form-input"
+        />
+      </div>
+      <div class="form-actions">
+        <button 
+          type="submit" 
+          [disabled]="!userForm.form.valid || loading()"
+          class="btn btn-primary"
+        >
+          {{ loading() ? 'Saving...' : (editingUser() ? 'Update User' : 'Add User') }}
+        </button>
+        @if (editingUser()) {
+          <button 
+            type="button" 
+            (click)="cancelEdit()"
+            class="btn btn-secondary"
+          >
+            Cancel
+          </button>
+        }
+      </div>
+    </form>
+  </div>
+
+  <!-- Users List -->
+  <div>
+    <h3>Users List</h3>
+    @if (loadingUsers()) {
+      <p>Loading users...</p>
+    } @else if (users().length === 0) {
+      <p class="no-users">No users found. Add one above!</p>
+    } @else {
+      <div class="table-container">
+        <table class="users-table">
+          <thead>
+            <tr class="table-header">
+              <th class="table-cell">Name</th>
+              <th class="table-cell">Email</th>
+              <th class="table-cell">Created At</th>
+              <th class="table-cell table-cell-center">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (user of users(); track user.id) {
+              <tr>
+                <td class="table-cell">{{ user.name }}</td>
+                <td class="table-cell">{{ user.email }}</td>
+                <td class="table-cell">
+                  {{ user.createdAt ? (user.createdAt | date:'medium') : 'N/A' }}
+                </td>
+                <td class="table-cell table-cell-center">
+                  <button 
+                    (click)="editUser(user)"
+                    class="btn btn-success btn-small"
+                  >
+                    Edit
+                  </button>
+                  <button 
+                    (click)="deleteUser(user.id!)"
+                    [disabled]="loading()"
+                    class="btn btn-danger btn-small"
+                    onclick="return confirm('Are you sure you want to delete this user?')"
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </div>
+
+  @if (error()) {
+    <div class="error-message">
+      Error: {{ error() }}
+    </div>
+  }
+</div>
